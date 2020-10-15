@@ -2,8 +2,14 @@
 title: "mini-project-2"
 author: "Victor Yuan"
 date: "22/09/2020"
-output: html_document
+output:
+  html_document: default
+  pdf_document: default
 ---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
 
 **Version 1.1**
 
@@ -44,10 +50,10 @@ From milestone 1, you should have an idea of the basic structure of your dataset
 First, write out the 4 research questions you defined in milestone 1 were. This will guide your work through milestone 2:
 
 <!-------------------------- Start your work below ---------------------------->
-1. *FILL_THIS_IN*
-2. *FILL_THIS_IN*
-3. *FILL_THIS_IN*
-4. *FILL_THIS_IN*
+1) Do the variables radius_mean and radius_worst have strong corrolation? What is their relationship?
+2) Are there variables that have relationship with diagnosis?
+3) Do the variables concavity_mean and compactness_mean have strong corrolation? What is their relationship?
+4) Can we predict diagnosis by a variable or a group of variables?
 <!----------------------------------------------------------------------------->
 
 ### 1.2 (10 points)
@@ -55,6 +61,8 @@ First, write out the 4 research questions you defined in milestone 1 were. This 
 Now, for each of your four research questions, choose one task from options 1-4 (summarizing), and one other task from 4-8 (graphing). You should have 2 tasks done for each research question (8 total). Make sure it makes sense to do them! (e.g. don't use a numerical variables for a task that needs a categorical variable.). Comment on why each task helps (or doesn't!) answer the corresponding research question. 
 
 Ensure that the output of each operation is printed! 
+
+
 
 **Summarizing:**
 
@@ -73,6 +81,147 @@ Ensure that the output of each operation is printed!
 Make sure it's clear what research question you are doing each operation for!
 
 <!------------------------- Start your work below ----------------------------->
+```{r}
+cancer_sample[1:20,]
+```
+
+1) Do the variables radius_mean and radius_worst have strong corrolation? What is their relationship?
+
+```{r}
+cancer <- cancer_sample 
+
+range_radius_mean=max(cancer$texture_mean)-min(cancer$texture_mean)
+
+mean_radius_mean=mean(cancer$texture_mean)
+
+median_radius_mean=median(cancer$texture_mean)
+
+sd_radius_mean=sd(cancer$texture_mean)
+
+cat("The range of radius_mean is equal to ", range_radius_mean, "\n")
+cat("The mean of radius_mean is equal to ", mean_radius_mean, "\n") 
+cat("The median of radius_mean is equal to ", median_radius_mean, "\n") 
+cat("The standard deviation of radius_mean is equal to ", sd_radius_mean, "\n") 
+
+```
+
+```{r}
+ggplot(data = cancer, mapping = aes(x = radius_mean, y = radius_worst)) + 
+  geom_point() + 
+  geom_smooth()
+```
+
+
+2) Are there variables that have relationship with diagnosis?
+
+```{r}
+ggplot(data = cancer, mapping = aes(x = radius_mean, y = radius_worst)) + 
+  geom_point(mapping = aes(color = diagnosis)) + 
+  geom_smooth()
+```
+
+
+```{r}
+ggplot(data = cancer, mapping = aes(x = symmetry_mean, y = symmetry_worst)) + 
+  geom_point(mapping = aes(color = diagnosis)) + 
+  geom_smooth()
+```
+
+```{r}
+ggplot(data = cancer, mapping = aes(x = texture_mean, y = texture_worst)) + 
+  geom_point(mapping = aes(color = diagnosis)) + 
+  geom_smooth()
+```
+
+```{r}
+ggplot(data = cancer, mapping = aes(x = perimeter_mean, y = perimeter_worst)) + 
+  geom_point(mapping = aes(color = diagnosis)) + 
+  geom_smooth()
+```
+
+```{r}
+ggplot(data = cancer, mapping = aes(x = area_mean, y = area_worst)) + 
+  geom_point(mapping = aes(color = diagnosis)) + 
+  geom_smooth()
+```
+
+```{r}
+ggplot(data = cancer, mapping = aes(x = smoothness_mean, y = smoothness_worst)) + 
+  geom_point(mapping = aes(color = diagnosis)) + 
+  geom_smooth()
+```
+
+```{r}
+ggplot(data = cancer, mapping = aes(x = compactness_mean, y = compactness_worst)) + 
+  geom_point(mapping = aes(color = diagnosis)) + 
+  geom_smooth()
+```
+
+```{r}
+ggplot(data = cancer, mapping = aes(x = concavity_mean, y = concavity_worst)) + 
+  geom_point(mapping = aes(color = diagnosis)) + 
+  geom_smooth()
+```
+
+```{r}
+ggplot(data = cancer, mapping = aes(x = concave_points_mean, y = concave_points_worst)) + 
+  geom_point(mapping = aes(color = diagnosis)) + 
+  geom_smooth()
+```
+
+```{r}
+ggplot(data = cancer, mapping = aes(x = symmetry_mean, y = symmetry_worst)) + 
+  geom_point(mapping = aes(color = diagnosis)) + 
+  geom_smooth()
+```
+
+```{r}
+ggplot(data = cancer, mapping = aes(x = fractal_dimension_mean, y = fractal_dimension_worst)) + 
+  geom_point(mapping = aes(color = diagnosis)) + 
+  geom_smooth()
+```
+
+3) Do the variables concavity_mean and compactness_mean have strong corrolation? What is their relationship?
+
+```{r}
+cancer <- cancer_sample 
+
+range_concavity_mean=max(cancer$concavity_mean)-min(cancer$concavity_mean)
+
+mean_concavity_mean=mean(cancer$concavity_mean)
+
+median_concavity_mean=median(cancer$concavity_mean)
+
+sd_concavity_mean=sd(cancer$concavity_mean)
+
+cat("The range of concavity_mean is equal to ", range_concavity_mean, "\n")
+cat("The mean of concavity_mean is equal to ", mean_concavity_mean, "\n") 
+cat("The median of concavity_mean is equal to ", median_concavity_mean, "\n") 
+cat("The standard deviation of concavity_mean is equal to ", sd_concavity_mean, "\n") 
+
+```
+
+```{r}
+
+```
+
+
+```{r}
+ggplot(data = cancer, mapping = aes(x = concavity_mean, y = compactness_mean)) + 
+  geom_point(mapping = aes(color = diagnosis)) + 
+  geom_smooth()
+```
+
+4. Based on the graphs, we can predict diagnosis by some variables like radius_mean, area_mean,.... It seems that we only need to use one of the variables radius_mean, area_mean, perimeter_mean. So let's look at the following graph 
+
+
+```{r}
+ggplot(data = cancer, mapping = aes(x = radius_mean, y = concave_points_mean)) + 
+  geom_point(mapping = aes(color = diagnosis)) + 
+  geom_smooth()
+```
+
+It seems we can use the variables radius_mean and concave_points_mean to predict diagnosis.
 
 
 <!----------------------------------------------------------------------------->
@@ -83,6 +232,7 @@ Based on the operations that you've completed, how much closer are you to answer
 
 <!------------------------- Write your answer here ---------------------------->
 
+I find out that many variables have strong correlation with each other. So, in order to predict the diagnosis, we only need few variables and can ignore other variables who have strong correlation with them. In particular, few variabels such as radius_mean, concave_points_mean and concavity_mean indicate better the type of diagnosis.
 
 <!----------------------------------------------------------------------------->
 
@@ -103,7 +253,10 @@ A reminder of the definition of *tidy* data:
 Based on the definition above, can you identify if your data is tidy or untidy? Go through all your columns, or if you have >8 variables, just pick 8, and explain whether the data is untidy or tidy.
 
 <!--------------------------- Start your work below --------------------------->
-
+The data is tidy because
+- Each variable has its own column.
+- Each observation has its own row.
+- Each value has its own cell.
 
 <!----------------------------------------------------------------------------->
 
@@ -116,7 +269,25 @@ If your data is untidy, then tidy it! Then, untidy it back to it's original stat
 Be sure to explain your reasoning for this task. Show us the "before" and "after".
 
 <!--------------------------- Start your work below --------------------------->
+```{r}
+(cancer_sample_untidy <- cancer_sample %>%
+    pivot_wider(id_cols = c(-radius_mean), 
+                names_from = diagnosis,
+                values_from = radius_mean)
+ )
+```
 
+This dataframe is untidy because there is no value in many cells for columns M and B.
+
+
+```{r}
+(cancer_sample_tidy <- cancer_sample_untidy %>% 
+  pivot_longer(cols = c(M,B), 
+               values_drop_na = TRUE,
+               names_to  = "diagnosis", 
+               values_to = "raduis_mean"))
+```
+I again put it tidy format using pivot_longer.
 
 <!----------------------------------------------------------------------------->
 
@@ -128,7 +299,19 @@ Try to choose a version of your data that you think will be appropriate to answe
 
 <!--------------------------- Start your work below --------------------------->
 
+```{r}
+(cancer_sample_two <- cancer_sample[,c(1:12)]  %>% 
+   drop_na()%>% 
+   filter(radius_mean<22)
+ )
+saveRDS(cancer_sample_two, file = "mydataframe.rds")
+```
 
+For now, I only found 3 appropriate functions to apply to this data frame.
 <!----------------------------------------------------------------------------->
 
 *When you are done, knit an `md` file. This is what we will mark! Make sure to open it and check that everything has knitted correctly before submitting your tagged release.*
+
+
+
+
